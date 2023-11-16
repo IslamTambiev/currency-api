@@ -24,6 +24,20 @@ class CurrencyPair(BaseModel):
     @field_validator('base', 'quote')
     @classmethod
     def currency_check(cls, v: str) -> str:
+        """
+        Validates the currency value.
+
+        Args:
+            v (str): The currency value to be validated.
+
+        Returns:
+            str: The validated currency value.
+
+        Raises:
+            HTTPException: If the currency value is not valid.
+                status_code (int): The status code of the exception.
+                detail (str): The detail message of the exception.
+        """
         if len(v) == 3 and v.isalpha() and v.upper() in currencies_list:
             return v.upper()
         else:
@@ -34,6 +48,15 @@ class CurrencyPair(BaseModel):
 
     @model_validator(mode='after')
     def pair_check(self) -> 'CurrencyPair':
+        """
+        A function that checks if the base and quote currencies are different.
+
+        Returns:
+            CurrencyPair: The CurrencyPair instance.
+
+        Raises:
+            HTTPException: If the base and quote currencies are the same.
+        """
         if self.base == self.quote:
             raise HTTPException(
                 status_code=400,
