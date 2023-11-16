@@ -16,6 +16,51 @@ currencies_list = ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG'
                    'ZMW', 'ZWL']
 
 
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: str | None = None
+
+
+class User(BaseModel):
+    username: str
+    email: str | None = None
+    full_name: str | None = None
+    disabled: bool | None = None
+
+    @field_validator('username')
+    @classmethod
+    def username_validate(cls, v: str):
+        """
+        Validate the given username.
+
+        Args:
+            v (str): The username to be validated.
+
+        Returns:
+            str: The validated username.
+
+        Raises:
+            HTTPException: If the username does not meet the validation criteria.
+                - status_code: 400
+                - detail: The username must contain only letters and consist of 3 or more characters
+        """
+        if v.isalpha() and len(v) >= 3:
+            return v
+        else:
+            raise HTTPException(
+                status_code=400,
+                detail='The username must contain only letters and consist of 3 or more characters'
+            )
+
+
+class UserInDB(User):
+    hashed_password: str
+
+
 class CurrencyPair(BaseModel):
     base: str
     quote: str
@@ -43,7 +88,7 @@ class CurrencyPair(BaseModel):
         else:
             raise HTTPException(
                 status_code=400,
-                detail='The value must be 3 characters and only letters'
+                detail='The value must be 3 characters and only letters or incorrect currency code'
             )
 
     @model_validator(mode='after')
