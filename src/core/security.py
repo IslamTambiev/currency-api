@@ -12,7 +12,7 @@ from src.core.config import config
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 def verify_password(plain_password, hashed_password):
@@ -21,8 +21,6 @@ def verify_password(plain_password, hashed_password):
 
 def get_password_hash(password):
     return pwd_context.hash(password)
-
-print(get_password_hash("pass"))
 
 
 def authenticate_user(fake_db, username: str, password: str):
