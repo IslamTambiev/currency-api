@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.security.api_key import APIKeyHeader
 
@@ -28,8 +28,8 @@ async def login_for_access_token(request: Request):
     return templates.TemplateResponse("login.html", context)
 
 
-@router.post("/login", response_model=Token)
-async def login_for_access_token(response: Response, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+@router.post("/login", response_class=RedirectResponse)
+async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     """
         Endpoint to authenticate a user and generate an access token.
         Args:
@@ -54,10 +54,12 @@ async def login_for_access_token(response: Response, form_data: Annotated[OAuth2
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
+    # Redirect the user to the currency exchange page
+    response = RedirectResponse(url="/currency/", status_code=303)
     # Set the cookie with the access token
     response.set_cookie("access_token", value=f"Bearer {access_token}", httponly=True)
     # Return the access token and token type
-    return {"access_token": access_token, "token_type": "bearer"}  # Response(status_code=200,
+    return response  # {"access_token": access_token, "token_type": "bearer"}  # Response(status_code=200,
 
 
 @router.get("/me/", response_model=User)
