@@ -76,6 +76,7 @@ button, input[type=submit]:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-left: auto; /* Центрирование по горизонтали */
     margin-right: auto; /* Центрирование по горизонтали */
+    display: none;
 }
 
 #site-navigation {
