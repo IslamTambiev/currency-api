@@ -14,7 +14,11 @@ async function convertCurrency() {
             credentials: "include",
             headers: { "Accept": "application/json" }
         });
-    console.log(response);
+
+    // JavaScript for displaying #result
+    var resultDiv = document.getElementById("result");
+    resultDiv.style.display = "block";
+
     // если запрос прошел нормально
     if (response.ok === true) {
         // получаем данные
