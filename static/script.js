@@ -25,6 +25,12 @@ async function convertCurrency() {
 
         document.getElementById("result").innerText = result;
     }
+    else if (response.status === 401) {
+        var data = await response.json();
+        console.log(data);
+        document.getElementById("result").innerText = data.detail;
+
+    }
     else{
         var data = await response.json();
         console.log(data);
