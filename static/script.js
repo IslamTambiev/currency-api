@@ -20,9 +20,14 @@ async function convertCurrency() {
         // получаем данные
         var data = await response.json();
         console.log(data);
+
+        var result = amount + " " + fromCurrency + " равно " + data["result"] + " " + toCurrency;
+
+        document.getElementById("result").innerText = result;
     }
-
-    var result = amount + " " + fromCurrency + " равно " + data["result"] + " " + toCurrency;
-
-    document.getElementById("result").innerText = result;
+    else{
+        var data = await response.json();
+        console.log(data);
+        document.getElementById("result").innerText = data.message;
+    }
 }

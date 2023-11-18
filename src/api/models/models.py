@@ -1,4 +1,3 @@
-from fastapi import HTTPException
 from pydantic import BaseModel, field_validator, model_validator
 
 currencies_list = ['AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN',
@@ -33,7 +32,7 @@ class User(BaseModel):
 
     @field_validator('username')
     @classmethod
-    def username_validate(cls, v: str):
+    def username_validate(cls, v: str) -> str:
         """
         Validate the given username.
 
@@ -51,9 +50,8 @@ class User(BaseModel):
         if v.isalpha() and len(v) >= 3:
             return v
         else:
-            raise HTTPException(
-                status_code=400,
-                detail='The username must contain only letters and consist of 3 or more characters'
+            raise ValueError(
+                'The username must contain only letters and consist of 3 or more characters'
             )
 
 
@@ -86,9 +84,18 @@ class CurrencyPair(BaseModel):
         if len(v) == 3 and v.isalpha() and v.upper() in currencies_list:
             return v.upper()
         else:
-            raise HTTPException(
-                status_code=400,
-                detail='The value must be 3 characters and only letters or incorrect currency code'
+            raise ValueError(
+                'The value must be 3 characters and only letters or incorrect currency code'
+            )
+
+    @field_validator('amount')
+    @classmethod
+    def username_validate(cls, v: float) -> float:
+        if v > 0:
+            return v
+        else:
+            raise ValueError(
+                'The amount of currency must be greater than 0'
             )
 
     @model_validator(mode='after')
@@ -103,8 +110,5 @@ class CurrencyPair(BaseModel):
             HTTPException: If the base and quote currencies are the same.
         """
         if self.base == self.quote:
-            raise HTTPException(
-                status_code=400,
-                detail='The currencies cannot be the same'
-            )
+            raise ValueError('The currencies cannot be the same')
         return self
