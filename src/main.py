@@ -9,6 +9,7 @@ from src.api.endpoints.currency import router as curr_router
 app = FastAPI()
 app.include_router(user_router, prefix='/auth')
 app.include_router(curr_router, prefix='/currency')
+app.mount("/auth/static", StaticFiles(directory="static", html=True), name="static")
 app.mount("/currency/static", StaticFiles(directory="static", html=True), name="static")
 
 
