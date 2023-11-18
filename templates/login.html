@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+</head>
+<body>
+
+<h1>Login</h1>
+
+<form action="/auth/login" method="post">
+    <label>Email</label>
+    <input type="text" name="username" value="{{ username }}" required>
+
+    <br>
+
+    <p><label>Password</label></p>
+    <input type="password" name="password" value="{{ password }}" required>
+
+    <br>
+
+    <input type="submit" value="Submit">
+</form>
+
+
+{% include '_site_map.html' %}
+
+</body>
+</html>
