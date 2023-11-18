@@ -55,11 +55,11 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
         data={"sub": user.username}, expires_delta=access_token_expires
     )
     # Redirect the user to the currency exchange page
-    response = RedirectResponse(url="/currency/", status_code=303)
+    response = RedirectResponse(url="/currency/", status_code=302)
     # Set the cookie with the access token
     response.set_cookie("access_token", value=f"Bearer {access_token}", httponly=True)
     # Return the access token and token type
-    return response  # {"access_token": access_token, "token_type": "bearer"}  # Response(status_code=200,
+    return response  # {"access_token": access_token, "token_type": "bearer"}
 
 
 @router.get("/me/", response_model=User)

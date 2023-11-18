@@ -41,3 +41,35 @@ async function convertCurrency() {
         document.getElementById("result").innerText = data.message;
     }
 }
+
+async function loadCurrencies() {
+    document.getElementById('loading').style.display = 'block';
+
+    // Отправка запроса на API
+    fetch("/currency/get_list/")
+        .then(response => response.json())
+        .then(data => {
+        document.getElementById('loading').style.display = 'none';
+        displayCurrencyList(data);
+    })
+        .catch(error => {
+        document.getElementById('loading').style.display = 'none';
+        console.error('Ошибка запроса:', error);
+    });
+}
+
+
+function displayCurrencyList(data) {
+    document.getElementById('loadCurrencies').style.display = 'none';
+    var currencyListElement = document.getElementById('currency-list');
+
+    var ul = document.createElement('ul');
+    console.log(typeof data);
+    for (var code in data) {
+        var li = document.createElement('li');
+        li.innerHTML = `<span>${code}</span> <span>${data[code]}</span>`;
+        ul.appendChild(li);
+    }
+
+    currencyListElement.appendChild(ul);
+}

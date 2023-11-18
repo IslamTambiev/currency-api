@@ -16,7 +16,13 @@ def root(request: Request):
     return templates.TemplateResponse("index.html", context)
 
 
-@router.get('/list/', dependencies=[Depends(get_current_active_user)])
+@router.get('/list/', response_class=HTMLResponse, dependencies=[Depends(get_current_active_user)])
+def root(request: Request):
+    context = {"request": request}
+    return templates.TemplateResponse("list.html", context)
+
+
+@router.get('/get_list/', dependencies=[Depends(get_current_active_user)])
 async def get_currency_list():
     data = currency_list()
     return data

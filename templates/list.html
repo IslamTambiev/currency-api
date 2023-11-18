@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency List</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <script type="text/javascript" src="../static/script.js"></script>
+</head>
+<body>
+
+    <h1>Список поддерживаемых валют</h1>
+
+    <button type="button" id="loadCurrencies" onclick="loadCurrencies()">Загрузить валюты</button>
+
+    <div id="loading">Загрузка...</div>
+
+    <div id="currency-list"></div>
+
+    {% include '_site_map.html' %}
+</body>
+</html>

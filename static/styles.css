@@ -111,3 +111,41 @@ button, input[type=submit]:hover {
 #site-navigation a.special-button:hover {
     background-color: #c0392b;
 }
+
+#currency-list {
+    margin-top: 20px;
+}
+
+#loading {
+    display: none;
+    margin-top: 20px;
+}
+
+#loadCurrencies {
+    font-size: 16px;
+    background-color: #3498db;
+    max-width: 400px;
+}
+
+#loadCurrencies:hover {
+    background-color: #2980b9;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    background-color: #4CAF50;
+    margin: 5px auto;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000;
+    max-width: 400px; /* Ограничение по ширине */
+}
